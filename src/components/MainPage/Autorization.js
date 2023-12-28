@@ -1,9 +1,11 @@
+import { useState } from "react";
+
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Button, Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { useState } from "react";
-import * as Q from "../../queries";
 import { useSnackbar } from "notistack";
+
+import * as Q from "../../queries";
 
 export function Authorization() {
   const { enqueueSnackbar } = useSnackbar();
@@ -15,8 +17,8 @@ export function Authorization() {
     onError: (error) =>
       enqueueSnackbar(error.message, {
         variant: "error",
-        autoHideDuration: 5000,
-      }),
+        autoHideDuration: 5000
+      })
   });
 
   const isAuthorized = Boolean(window.localStorage.getItem("token"));
@@ -31,7 +33,7 @@ export function Authorization() {
       spacing={2}
       alignItems="center"
       style={{
-        padding: "16px 24px",
+        padding: "16px 24px"
       }}
     >
       <Grid item>
@@ -46,7 +48,7 @@ export function Authorization() {
             style={{
               color: "#00FF00",
               height: "32px",
-              width: "32px",
+              width: "32px"
             }}
           />
         </Grid>

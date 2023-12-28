@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+
 import { useGoodsContext } from "../GoodsContext";
 
 export function AddProductButton() {
@@ -11,14 +12,14 @@ export function AddProductButton() {
         name: "",
         price: null,
         is_weight: false,
-        related_barcodes: "",
+        related_barcodes: ""
       };
       const initialValues = {
         ...initData,
         purchasePrice: null,
         margin: 25,
         marked: false,
-        original: initData,
+        original: initData
       };
       draftData.push(initialValues);
     });

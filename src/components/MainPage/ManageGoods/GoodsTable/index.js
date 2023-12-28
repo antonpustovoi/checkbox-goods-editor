@@ -1,7 +1,9 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { columns } from "./columns";
-import { useGoodsContext } from "../GoodsContext";
+
 import { isNullable } from "../../../../utils";
+import { useGoodsContext } from "../GoodsContext";
+
+import { columns } from "./columns";
 
 export function GoodsTable() {
   const { data, setData } = useGoodsContext();
@@ -24,7 +26,7 @@ export function GoodsTable() {
       disableColumnMenu
       processRowUpdate={processRowUpdate}
       localeText={{
-        noRowsLabel: "Список порожній",
+        noRowsLabel: "Список порожній"
       }}
       sort
       getRowId={(row) => row.code}
@@ -45,11 +47,11 @@ export function GoodsTable() {
       }}
       sx={{
         "& .cell-changed": {
-          backgroundColor: "#B7EDFF",
+          backgroundColor: "#B7EDFF"
         },
         "& .MuiInputBase-root > input": {
-          padding: "0 10px",
-        },
+          padding: "0 10px"
+        }
       }}
     />
   );

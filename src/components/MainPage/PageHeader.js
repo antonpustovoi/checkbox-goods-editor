@@ -6,7 +6,7 @@ export function PageHeader() {
         color: "#FFF",
         padding: "32px 48px",
         fontSize: "24px",
-        textAlign: "start",
+        textAlign: "start"
       }}
     >
       <span style={{ fontWeight: "bold" }}>CheckBox</span> - редагування товарів

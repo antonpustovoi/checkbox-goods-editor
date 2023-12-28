@@ -6,5 +6,5 @@ export const Endpoints = {
   UploadGoodsUrl: () => `${BASE_PATH}/goods/import/upload`,
   GoodsImportStatusUrl: (id) => `${BASE_PATH}/goods/import/task_status/${id}`,
   GoodsImportApplyChangesUrl: (id) =>
-    `${BASE_PATH}/goods/import/apply_changes/${id}`,
+    `${BASE_PATH}/goods/import/apply_changes/${id}`
 };

@@ -1,7 +1,8 @@
 import { Divider, Unstable_Grid2 as Grid } from "@mui/material";
+
 import { Authorization } from "./Autorization";
-import { PageHeader } from "./PageHeader";
 import { ManageGoods } from "./ManageGoods";
+import { PageHeader } from "./PageHeader";
 
 export function MainPage() {
   return (

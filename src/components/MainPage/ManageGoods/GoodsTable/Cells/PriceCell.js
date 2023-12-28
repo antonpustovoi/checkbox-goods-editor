@@ -1,6 +1,7 @@
 import ArrowDownward from "@mui/icons-material/ArrowDownward";
 import ArrowUpward from "@mui/icons-material/ArrowUpward";
 import { IconButton } from "@mui/material";
+
 import { useGoodsContext } from "../../GoodsContext";
 
 export function PriceCell(props) {
@@ -45,7 +46,7 @@ export function PriceCell(props) {
           style={{
             display: "flex",
             flexDirection: "column",
-            marginLeft: "auto",
+            marginLeft: "auto"
           }}
         >
           <IconButton

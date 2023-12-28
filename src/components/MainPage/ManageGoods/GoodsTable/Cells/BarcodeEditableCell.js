@@ -1,3 +1,9 @@
+import { useState } from "react";
+
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import {
   Button,
   CircularProgress,
@@ -8,17 +14,13 @@ import {
   Unstable_Grid2 as Grid,
   IconButton,
   OutlinedInput,
-  TextField,
+  TextField
 } from "@mui/material";
-import { getGridDefaultColumnTypes, useGridApiContext } from "@mui/x-data-grid";
-import { useLayoutEffect, useRef, useState } from "react";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
-import { useDebounce } from "../../../../../hooks/useDebounce";
+import { useGridApiContext } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
+
+import { useDebounce } from "../../../../../hooks/useDebounce";
 import * as Q from "../../../../../queries";
-import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 
 export function BarcodeEditableCell(props) {
   const { api, value, id, field, hasFocus, row } = props;
@@ -35,7 +37,7 @@ export function BarcodeEditableCell(props) {
   const { data, isFetching } = useQuery({
     queryKey: ["Goods", debounceValue],
     queryFn: Q.getGoods,
-    initialData: [],
+    initialData: []
   });
 
   const debounceSetNewBarcode = useDebounce(setDebounceValue, 200);
@@ -69,7 +71,7 @@ export function BarcodeEditableCell(props) {
         style={{
           padding: "0 8px",
           overflow: "hidden",
-          textOverflow: "ellipsis",
+          textOverflow: "ellipsis"
         }}
       >
         {value}
@@ -87,7 +89,12 @@ export function BarcodeEditableCell(props) {
               />
             </Grid>
             {barcodes.map((barcode) => (
-              <Grid item xs={12} sx={{ display: "flex", alignItems: "center" }}>
+              <Grid
+                key={barcode}
+                item
+                xs={12}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
                 <OutlinedInput fullWidth value={barcode} disabled />
                 <IconButton onClick={handleRemove(barcode)}>
                   <CloseOutlinedIcon />

@@ -1,22 +1,25 @@
-import { AddProductButton } from "./AddProductButton";
-import { GoodsTable } from "./GoodsTable";
-import { useImmer } from "../../../hooks/useImmer";
-import { SelectProductField } from "./SelectProductField";
+import { useState } from "react";
+
 import {
   Button,
   CircularProgress,
   FormControlLabel,
   Unstable_Grid2 as Grid,
-  Switch,
+  Switch
 } from "@mui/material";
-import { GoodsContext } from "./GoodsContext";
 import { useMutation } from "@tanstack/react-query";
-import * as Q from "../../../queries";
-import { ClearMarkedProductsButton } from "./ClearMarkedProductsButton";
 import { useSnackbar } from "notistack";
+
+import { useImmer } from "../../../hooks/useImmer";
+import * as Q from "../../../queries";
+
+import { AddProductButton } from "./AddProductButton";
+import { ClearMarkedProductsButton } from "./ClearMarkedProductsButton";
 import { CsvExportButton } from "./CsvExportButton";
 import { CsvImportButton } from "./CsvImportButton";
-import { useState } from "react";
+import { GoodsContext } from "./GoodsContext";
+import { GoodsTable } from "./GoodsTable";
+import { SelectProductField } from "./SelectProductField";
 
 export function ManageGoods() {
   const { enqueueSnackbar } = useSnackbar();
@@ -30,8 +33,8 @@ export function ManageGoods() {
     onError: (error) =>
       enqueueSnackbar(error.message, {
         variant: "error",
-        autoHideDuration: 5000,
-      }),
+        autoHideDuration: 5000
+      })
   });
 
   const handleSave = () => mutate(data);
@@ -55,7 +58,7 @@ export function ManageGoods() {
               alignItems: "center",
               justifyContent: "center",
               zIndex: "2",
-              backgroundColor: "#FFFFFFB0",
+              backgroundColor: "#FFFFFFB0"
             }}
           >
             <CircularProgress />

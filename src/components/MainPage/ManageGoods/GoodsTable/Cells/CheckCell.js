@@ -1,5 +1,6 @@
-import { useGoodsContext } from "../../GoodsContext";
 import CheckIcon from "@mui/icons-material/Check";
+
+import { useGoodsContext } from "../../GoodsContext";
 
 export function CheckCell(props) {
   const { field, row } = props;
@@ -20,7 +21,7 @@ export function CheckCell(props) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        cursor: "pointer",
+        cursor: "pointer"
       }}
       onClick={handleClick}
     >

@@ -1,5 +1,6 @@
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { IconButton } from "@mui/material";
+
 import { useGoodsContext } from "../GoodsContext";
 
 export function RemoveButton(props) {

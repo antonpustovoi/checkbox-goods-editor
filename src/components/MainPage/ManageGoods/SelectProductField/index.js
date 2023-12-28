@@ -1,7 +1,9 @@
+import { useMemo, useState } from "react";
+
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+
 import * as Q from "../../../../queries";
-import { useMemo, useState } from "react";
 import { useGoodsContext } from "../GoodsContext";
 
 export function SelectProductField() {
@@ -12,7 +14,7 @@ export function SelectProductField() {
   const { data: goods, isFetching } = useQuery({
     queryKey: ["Goods", inputValue],
     queryFn: Q.getGoods,
-    initialData: [],
+    initialData: []
   });
 
   const options = useMemo(
@@ -26,7 +28,7 @@ export function SelectProductField() {
       price: null,
       purchasePrice: null,
       margin: 25,
-      original: value,
+      original: value
     };
     setData([...data, nextValue]);
   };
@@ -74,7 +76,7 @@ export function SelectProductField() {
                 {isFetching && <CircularProgress color="inherit" size={20} />}
                 {params.InputProps.endAdornment}
               </>
-            ),
+            )
           }}
         />
       )}
