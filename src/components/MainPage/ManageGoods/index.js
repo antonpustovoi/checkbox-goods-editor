@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
   Button,
   CircularProgress,
+  Divider,
   FormControlLabel,
   Unstable_Grid2 as Grid,
   Switch
@@ -65,9 +66,10 @@ export function ManageGoods() {
             <span style={{ marginLeft: "10px" }}>Збереження змін</span>
           </div>
         )}
-        <Grid>
+        <Grid style={{ padding: "8px 12px" }}>
           <SelectProductField />
         </Grid>
+        <Divider />
         <Grid sx={{ marginLeft: "auto" }}>
           <FormControlLabel
             control={<Switch />}

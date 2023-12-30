@@ -21,12 +21,13 @@ const apiCall = async (endpoint, options) => {
 };
 
 export const authorize = async (data) => {
+  const { licenseKey, pinCode } = data;
   const response = await apiCall(Endpoints.AuthorizeUrl(), {
     method: "POST",
     headers: {
-      "X-License-Key": "13b2be6e7ce6c862b2e04f38"
+      "X-License-Key": licenseKey
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify({ pin_code: pinCode })
   });
   window.localStorage.setItem("token", response["access_token"]);
 };
@@ -39,13 +40,20 @@ const getProductObject = (srcObject) => ({
   related_barcodes: srcObject.related_barcodes
 });
 
-export const getGoods = async ({ queryKey }) => {
-  const [, query] = queryKey;
-  const searchParams = new URLSearchParams({ query });
+export const getGoods = async ({ queryKey, pageParam }) => {
+  const [, inputValue, limit] = queryKey;
+  const searchParams = new URLSearchParams({
+    query: inputValue,
+    limit,
+    offset: pageParam * limit
+  });
   const response = await apiCall(Endpoints.GoodsUrl(searchParams), {
     method: "GET"
   });
-  return response.results.map(getProductObject);
+  return {
+    data: response.results.map(getProductObject),
+    pageParam
+  };
 };
 
 export const getGood = async ({ queryKey }) => {

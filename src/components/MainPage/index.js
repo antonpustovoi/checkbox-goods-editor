@@ -1,6 +1,5 @@
-import { Divider, Unstable_Grid2 as Grid } from "@mui/material";
+import { Unstable_Grid2 as Grid } from "@mui/material";
 
-import { Authorization } from "./Autorization";
 import { ManageGoods } from "./ManageGoods";
 import { PageHeader } from "./PageHeader";
 
@@ -15,10 +14,6 @@ export function MainPage() {
       <Grid>
         <PageHeader />
       </Grid>
-      <Grid>
-        <Authorization />
-      </Grid>
-      <Divider />
       <Grid xs>
         <ManageGoods />
       </Grid>

@@ -1,26 +1,51 @@
 import { useMemo, useState } from "react";
 
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
-import * as Q from "../../../../queries";
+import { useDebounce } from "@hooks/useDebounce";
+import * as Q from "@queries";
+
 import { useGoodsContext } from "../GoodsContext";
 
-export function SelectProductField() {
-  const [inputValue, setInputValue] = useState("");
+import { ListboxComponent } from "./ListboxComponent";
+import { css } from "./css";
 
+const DEFAULT_LIMIT = 25;
+const DEBOUNCE_DELAY = 200;
+
+export function SelectProductField() {
   const { data, setData } = useGoodsContext();
 
-  const { data: goods, isFetching } = useQuery({
-    queryKey: ["Goods", inputValue],
+  const [inputValue, setInputValue] = useState("");
+
+  const {
+    data: goods,
+    isFetching,
+    fetchNextPage
+  } = useInfiniteQuery({
+    queryKey: ["Goods", inputValue, DEFAULT_LIMIT],
     queryFn: Q.getGoods,
-    initialData: []
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.length >= DEFAULT_LIMIT) {
+        return lastPage.pageParam + 1;
+      }
+    },
+    gcTime: 0,
+    refetchOnWindowFocus: false
   });
 
-  const options = useMemo(
-    () => goods.filter((el) => data.every((option) => option.id !== el.id)),
-    [goods, data]
-  );
+  const debounceSetInputValue = useDebounce(setInputValue, DEBOUNCE_DELAY);
+
+  const options = useMemo(() => {
+    const options = goods?.pages.map((page) => page.data).flat() || [];
+    return options.filter((option) =>
+      data.every((el) => el.code !== option.code)
+    );
+  }, [goods, data]);
+
+  const handleBottomScroll = () => fetchNextPage({ cancelRefetch: false });
 
   const handleChange = (_event, value) => {
     const nextValue = {
@@ -34,52 +59,61 @@ export function SelectProductField() {
   };
 
   const handleInputChange = (_event, value, reason) =>
-    reason !== "reset" && setInputValue(value);
+    reason === "input" && debounceSetInputValue(value);
 
-  const handleClose = () => setInputValue("");
+  const handleBlur = () => setInputValue("");
 
   const renderOption = (props, option) => (
-    <li {...props}>
-      {option.name}
+    <li {...props} css={css.option}>
+      <span css={css.name}>{option.name}</span>
       {Boolean(option.related_barcodes) && (
-        <span style={{ marginLeft: "auto", color: "#707070" }}>
+        <span css={css.barcodes}>
+          {"["}
           {option.related_barcodes}
+          {"]"}
         </span>
       )}
+      <span css={css.price}>{Number(option.price).toFixed(2)}</span>
     </li>
+  );
+
+  const renderInput = (params) => (
+    <TextField
+      {...params}
+      label="Пошук"
+      InputProps={{
+        ...params.InputProps,
+        endAdornment: (
+          <>
+            {isFetching && <CircularProgress color="inherit" size={20} />}
+            {params.InputProps.endAdornment}
+          </>
+        )
+      }}
+    />
   );
 
   return (
     <Autocomplete
       value={null}
-      inputValue={inputValue}
       options={options}
       loading={isFetching}
       blurOnSelect
       clearOnBlur
       loadingText="Завантаження списку..."
+      noOptionsText="Елементи відсутні"
       filterOptions={(options) => options}
       getOptionLabel={(option) => option.name}
-      getOptionKey={(option) => option.id}
+      getOptionKey={(option) => option.code}
       onChange={handleChange}
       onInputChange={handleInputChange}
-      onClose={handleClose}
+      onBlur={handleBlur}
+      ListboxComponent={ListboxComponent}
+      ListboxProps={{
+        onBottomScroll: handleBottomScroll
+      }}
       renderOption={renderOption}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Пошук"
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <>
-                {isFetching && <CircularProgress color="inherit" size={20} />}
-                {params.InputProps.endAdornment}
-              </>
-            )
-          }}
-        />
-      )}
+      renderInput={renderInput}
     />
   );
 }
