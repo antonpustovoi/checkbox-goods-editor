@@ -1,3 +1,5 @@
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+
 import { BarcodeEditableCell } from "./Cells/BarcodeEditableCell";
 import { CheckCell } from "./Cells/CheckCell";
 import { DefaultCell } from "./Cells/DefaultCell";
@@ -50,6 +52,7 @@ export const columns = [
     field: "price",
     editable: true,
     type: "number",
+    width: 114,
     renderCell: (props) => <PriceCell {...props} />
   },
   {
@@ -78,6 +81,19 @@ export const columns = [
     editable: true,
     renderCell: (props) => <DefaultCell {...props} />,
     renderEditCell: (props) => <BarcodeEditableCell {...props} />
+  },
+  {
+    headerName: "Збережено",
+    field: "saved",
+    width: 96,
+    align: "center",
+    renderCell: ({ row }) =>
+      Boolean(
+        row.original.id &&
+          ["code", "name", "price", "is_weight", "related_barcodes"].every(
+            (field) => row[field] === row.original[field]
+          )
+      ) && <CheckCircleOutlineOutlinedIcon sx={{ color: "success.main" }} />
   },
   {
     headerName: "Дії",

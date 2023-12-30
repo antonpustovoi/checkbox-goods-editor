@@ -1,18 +1,23 @@
+import PropTypes from "prop-types";
+
+MarginCell.propTypes = {
+  row: PropTypes.object
+};
+
 export function MarginCell(props) {
-  const { row } = props;
-  const { margin, purchasePrice } = row;
+  const { margin, purchasePrice } = props.row;
 
   return (
     <div
-      style={{
-        display: "flex",
+      css={{
         width: "100%",
+        display: "flex",
         justifyContent: "space-between"
       }}
     >
       <div>{margin}</div>
       {Boolean(purchasePrice && margin) && (
-        <div style={{ color: "#707070" }}>
+        <div css={{ color: "#707070" }}>
           ({Number(purchasePrice + purchasePrice * (margin / 100)).toFixed(2)})
         </div>
       )}

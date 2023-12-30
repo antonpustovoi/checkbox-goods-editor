@@ -1,6 +1,12 @@
 import CheckIcon from "@mui/icons-material/Check";
+import PropTypes from "prop-types";
 
 import { useGoodsContext } from "../../GoodsContext";
+
+CheckCell.propTypes = {
+  field: PropTypes.string,
+  row: PropTypes.object
+};
 
 export function CheckCell(props) {
   const { field, row } = props;
@@ -15,7 +21,7 @@ export function CheckCell(props) {
 
   return (
     <div
-      style={{
+      css={{
         height: "100%",
         width: "100%",
         display: "flex",

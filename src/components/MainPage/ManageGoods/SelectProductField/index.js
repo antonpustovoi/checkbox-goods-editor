@@ -50,9 +50,9 @@ export function SelectProductField() {
   const handleChange = (_event, value) => {
     const nextValue = {
       ...value,
-      price: null,
       purchasePrice: null,
       margin: 25,
+      marked: false,
       original: value
     };
     setData([...data, nextValue]);

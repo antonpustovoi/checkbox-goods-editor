@@ -1,13 +1,17 @@
 import { Button } from "@mui/material";
 
+import { exportToCsvFile } from "@utils";
+
 import { useGoodsContext } from "../GoodsContext";
 
 export function CsvExportButton() {
   const { data } = useGoodsContext();
 
-  const handleClick = () => {
-    console.log("XXXX", data);
-  };
+  const handleClick = () => exportToCsvFile(data);
 
-  return <Button onClick={handleClick}>Експорт</Button>;
+  return (
+    <Button disabled={!data.length} onClick={handleClick}>
+      Експорт
+    </Button>
+  );
 }

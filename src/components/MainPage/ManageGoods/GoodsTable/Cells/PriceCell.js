@@ -1,8 +1,13 @@
 import ArrowDownward from "@mui/icons-material/ArrowDownward";
 import ArrowUpward from "@mui/icons-material/ArrowUpward";
 import { IconButton } from "@mui/material";
+import PropTypes from "prop-types";
 
 import { useGoodsContext } from "../../GoodsContext";
+
+PriceCell.propTypes = {
+  row: PropTypes.object
+};
 
 export function PriceCell(props) {
   const { code, price, original } = props.row;
@@ -11,7 +16,6 @@ export function PriceCell(props) {
 
   const handleCeilClick = (e) =>
     setData((draftData) => {
-      console.log("AAAAAAAAA", e);
       const foundEl = draftData.find((el) => el.code === code);
       foundEl.price = Math.ceil(price);
     });
@@ -28,11 +32,13 @@ export function PriceCell(props) {
       foundEl.price = Math.floor(price);
     });
 
+  const iconButtonProps = {
+    tabIndex: -1,
+    sx: { padding: "2px" }
+  };
+
   return (
-    <div
-      onKeyDown={(event) => event.preventDefault()}
-      style={{ display: "flex", alignItems: "center", width: "100%" }}
-    >
+    <div css={{ display: "flex", alignItems: "center", width: "100%" }}>
       {price ? Number(price).toFixed(2) : "-"}
       {Boolean(original.price && price && price > original.price) && (
         <ArrowUpward sx={{ color: "#FF0000" }} />
@@ -43,31 +49,15 @@ export function PriceCell(props) {
       {Boolean(price) && (
         <div
           onDoubleClick={(event) => event.stopPropagation()}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginLeft: "auto"
-          }}
+          css={{ display: "flex", flexDirection: "column", marginLeft: "auto" }}
         >
-          <IconButton
-            tabIndex={-1}
-            sx={{ padding: "2px" }}
-            onClick={handleCeilClick}
-          >
+          <IconButton {...iconButtonProps} onClick={handleCeilClick}>
             <ArrowUpward sx={{ height: "14px", width: "14px" }} />
           </IconButton>
-          <IconButton
-            tabIndex={-1}
-            sx={{ padding: "2px" }}
-            onClick={handleFiftyClick}
-          >
+          <IconButton {...iconButtonProps} onClick={handleFiftyClick}>
             <span style={{ fontSize: "12px", fontWeight: "bold" }}>50</span>
           </IconButton>
-          <IconButton
-            tabIndex={-1}
-            sx={{ padding: "2px" }}
-            onClick={handleFloorClick}
-          >
+          <IconButton {...iconButtonProps} onClick={handleFloorClick}>
             <ArrowDownward sx={{ height: "14px", width: "14px" }} />
           </IconButton>
         </div>

@@ -33,10 +33,11 @@ export const authorize = async (data) => {
 };
 
 const getProductObject = (srcObject) => ({
+  id: srcObject.id,
   code: srcObject.code,
-  is_weight: srcObject.is_weight,
   name: srcObject.name,
   price: srcObject.price / 100,
+  is_weight: srcObject.is_weight,
   related_barcodes: srcObject.related_barcodes
 });
 
@@ -86,7 +87,7 @@ export const saveGoods = async (data) => {
       good_name: el.name,
       price: el.price,
       is_weight: el.is_weight,
-      barcodes: el.related_barcodes
+      barcodes: el.related_barcodes || " "
     }))
   };
   const formData = new FormData();
@@ -105,7 +106,8 @@ export const saveGoods = async (data) => {
     method: "POST"
   });
   await getImportStatus(response.task_id);
-  const res = await Promise.all(
-    data.map((el) => getGood({ queryKey: [null, el.code] }))
+  const responses = await Promise.all(
+    data.map((el) => getGood({ queryKey: ["Good", el.code] }))
   );
+  return data.map((el, index) => ({ ...el, original: responses[index] }));
 };

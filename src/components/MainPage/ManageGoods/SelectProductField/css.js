@@ -18,6 +18,6 @@ export const css = {
   },
   price: {
     color: "#707070",
-    width: "60px"
+    minWidth: "60px"
   }
 };

@@ -11,8 +11,9 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
 
-import { useImmer } from "../../../hooks/useImmer";
-import * as Q from "../../../queries";
+import { useImmer } from "@hooks/useImmer";
+import * as Q from "@queries";
+import { exportToCsvFile } from "@utils";
 
 import { AddProductButton } from "./AddProductButton";
 import { ClearMarkedProductsButton } from "./ClearMarkedProductsButton";
@@ -21,26 +22,39 @@ import { CsvImportButton } from "./CsvImportButton";
 import { GoodsContext } from "./GoodsContext";
 import { GoodsTable } from "./GoodsTable";
 import { SelectProductField } from "./SelectProductField";
+import { css } from "./css";
 
 export function ManageGoods() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [data, setData] = useImmer([]);
 
+  console.log("AAAAAA", data);
+
   const [shouldAutoExport, setShouldAutoExport] = useState(true);
+
+  const handleSuccess = (nextData) => {
+    if (shouldAutoExport) {
+      exportToCsvFile(data);
+    }
+    setData(nextData);
+  };
+
+  const handleError = (error) =>
+    enqueueSnackbar(error.message, {
+      variant: "error",
+      autoHideDuration: 5000
+    });
 
   const { mutate, isPending } = useMutation({
     mutationFn: Q.saveGoods,
-    onError: (error) =>
-      enqueueSnackbar(error.message, {
-        variant: "error",
-        autoHideDuration: 5000
-      })
+    onSuccess: handleSuccess,
+    onError: handleError
   });
 
   const handleSave = () => mutate(data);
 
-  const handleSwitch = () => setShouldAutoExport(!shouldAutoExport);
+  const handleChange = () => setShouldAutoExport(!shouldAutoExport);
 
   return (
     <GoodsContext.Provider value={{ data, setData }}>
@@ -50,32 +64,22 @@ export function ManageGoods() {
         sx={{ height: "100%", position: "relative" }}
       >
         {isPending && (
-          <div
-            style={{
-              position: "absolute",
-              height: "100%",
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: "2",
-              backgroundColor: "#FFFFFFB0"
-            }}
-          >
+          <div css={css.frame}>
             <CircularProgress />
-            <span style={{ marginLeft: "10px" }}>Збереження змін</span>
+            <span>Збереження змін</span>
           </div>
         )}
-        <Grid style={{ padding: "8px 12px" }}>
+        <Grid css={{ padding: "8px 12px" }}>
           <SelectProductField />
         </Grid>
         <Divider />
-        <Grid sx={{ marginLeft: "auto" }}>
+        <Grid container css={{ padding: "8px 12px 4px" }}>
           <FormControlLabel
+            css={{ marginRight: "auto" }}
             control={<Switch />}
             label="Експортувати при збереженні"
-            value={shouldAutoExport}
-            onChange={handleSwitch}
+            checked={shouldAutoExport}
+            onChange={handleChange}
           />
           <CsvExportButton />
           <CsvImportButton />
