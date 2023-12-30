@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/static/js/main.3f2c73b4.js",
-    "static/js/787.3364c53b.chunk.js": "/static/js/787.3364c53b.chunk.js",
-    "index.html": "/index.html",
-    "main.3f2c73b4.js.map": "/static/js/main.3f2c73b4.js.map",
-    "787.3364c53b.chunk.js.map": "/static/js/787.3364c53b.chunk.js.map"
+    "main.js": "/checkbox-goods-editor/static/js/main.969b8c85.js",
+    "static/js/787.3364c53b.chunk.js": "/checkbox-goods-editor/static/js/787.3364c53b.chunk.js",
+    "index.html": "/checkbox-goods-editor/index.html",
+    "main.969b8c85.js.map": "/checkbox-goods-editor/static/js/main.969b8c85.js.map",
+    "787.3364c53b.chunk.js.map": "/checkbox-goods-editor/static/js/787.3364c53b.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.3f2c73b4.js"
+    "static/js/main.969b8c85.js"
   ]
 }
