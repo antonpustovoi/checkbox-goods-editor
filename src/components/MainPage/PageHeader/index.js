@@ -1,21 +1,26 @@
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Unstable_Grid2 as Grid } from "@mui/material";
+import PropTypes from "prop-types";
 
 import { LoginButton } from "./LoginButton";
 import { css } from "./css";
 
-export function PageHeader() {
-  const isAuthorized = Boolean(window.localStorage.getItem("token"));
+PageHeader.propTypes = {
+  isAuthorized: PropTypes.bool
+};
+
+export function PageHeader(props) {
+  const { isAuthorized } = props;
 
   return (
     <Grid container alignItems="center" css={css.root}>
       <Grid css={css.label}>
         <span style={{ fontWeight: "bold" }}>CheckBox</span> - редагування
-        товарів
+        продуктів
       </Grid>
       <Grid css={css.actions}>
         {isAuthorized && <CheckCircleIcon css={css.icon} />}
-        <LoginButton />
+        <LoginButton isAuthorized={isAuthorized} />
       </Grid>
     </Grid>
   );

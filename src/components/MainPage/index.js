@@ -1,9 +1,11 @@
 import { Unstable_Grid2 as Grid } from "@mui/material";
 
-import { ManageGoods } from "./ManageGoods";
+import { ManageProducts } from "./ManageProducts";
 import { PageHeader } from "./PageHeader";
 
 export function MainPage() {
+  const isAuthorized = Boolean(window.localStorage.getItem("token"));
+
   return (
     <Grid
       container
@@ -12,11 +14,13 @@ export function MainPage() {
       style={{ height: "100vh" }}
     >
       <Grid>
-        <PageHeader />
+        <PageHeader isAuthorized={isAuthorized} />
       </Grid>
-      <Grid xs>
-        <ManageGoods />
-      </Grid>
+      {isAuthorized && (
+        <Grid xs>
+          <ManageProducts />
+        </Grid>
+      )}
     </Grid>
   );
 }

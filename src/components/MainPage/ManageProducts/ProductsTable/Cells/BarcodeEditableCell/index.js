@@ -62,7 +62,7 @@ export function BarcodeEditableCell(props) {
             <Grid xs={12}>
               <TextField
                 fullWidth
-                label="Назва товару"
+                label="Назва продукту"
                 value={row.name}
                 disabled
               />

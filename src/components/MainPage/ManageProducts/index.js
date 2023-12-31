@@ -19,25 +19,23 @@ import { AddProductButton } from "./AddProductButton";
 import { ClearMarkedProductsButton } from "./ClearMarkedProductsButton";
 import { CsvExportButton } from "./CsvExportButton";
 import { CsvImportButton } from "./CsvImportButton";
-import { GoodsContext } from "./GoodsContext";
-import { GoodsTable } from "./GoodsTable";
+import { ProductsContext } from "./ProductsContext";
+import { ProductsTable } from "./ProductsTable";
 import { SelectProductField } from "./SelectProductField";
 import { css } from "./css";
 
-export function ManageGoods() {
+export function ManageProducts() {
   const { enqueueSnackbar } = useSnackbar();
 
-  const [data, setData] = useImmer([]);
-
-  console.log("AAAAAA", data);
+  const [products, setProducts] = useImmer([]);
 
   const [shouldAutoExport, setShouldAutoExport] = useState(true);
 
   const handleSuccess = (nextData) => {
     if (shouldAutoExport) {
-      exportToCsvFile(data);
+      exportToCsvFile(products);
     }
-    setData(nextData);
+    setProducts(nextData);
   };
 
   const handleError = (error) =>
@@ -47,17 +45,17 @@ export function ManageGoods() {
     });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: Q.saveGoods,
+    mutationFn: Q.saveProducts,
     onSuccess: handleSuccess,
     onError: handleError
   });
 
-  const handleSave = () => mutate(data);
+  const handleSave = () => mutate(products);
 
   const handleChange = () => setShouldAutoExport(!shouldAutoExport);
 
   return (
-    <GoodsContext.Provider value={{ data, setData }}>
+    <ProductsContext.Provider value={{ products, setProducts }}>
       <Grid
         container
         direction="column"
@@ -85,14 +83,14 @@ export function ManageGoods() {
           <CsvImportButton />
           <ClearMarkedProductsButton />
           <AddProductButton />
-          <Button disabled={!data.length || isPending} onClick={handleSave}>
+          <Button disabled={!products.length || isPending} onClick={handleSave}>
             Зберегти зміни
           </Button>
         </Grid>
         <Grid xs sx={{ overflow: "auto", width: "100%" }}>
-          <GoodsTable />
+          <ProductsTable />
         </Grid>
       </Grid>
-    </GoodsContext.Provider>
+    </ProductsContext.Provider>
   );
 }

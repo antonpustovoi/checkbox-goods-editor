@@ -1,13 +1,13 @@
 import { Button } from "@mui/material";
 
-import { useGoodsContext } from "../GoodsContext";
+import { useProductsContext } from "../ProductsContext";
 
 export function AddProductButton() {
-  const { setData } = useGoodsContext();
+  const { setProducts } = useProductsContext();
 
   const handleClick = () =>
-    setData((draftData) => {
-      const initData = {
+    setProducts((draftProducts) => {
+      const initProduct = {
         code: Date.now(),
         name: "",
         price: null,
@@ -15,13 +15,13 @@ export function AddProductButton() {
         related_barcodes: ""
       };
       const initialValues = {
-        ...initData,
+        ...initProduct,
         purchasePrice: null,
         margin: 25,
         marked: false,
-        original: initData
+        original: initProduct
       };
-      draftData.push(initialValues);
+      draftProducts.push(initialValues);
     });
 
   return <Button onClick={handleClick}>Додати новий продукт</Button>;

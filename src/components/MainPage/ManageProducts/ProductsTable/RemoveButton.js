@@ -2,7 +2,7 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { IconButton } from "@mui/material";
 import PropTypes from "prop-types";
 
-import { useGoodsContext } from "../GoodsContext";
+import { useProductsContext } from "../ProductsContext";
 
 RemoveButton.propTypes = {
   row: PropTypes.object
@@ -11,11 +11,13 @@ RemoveButton.propTypes = {
 export function RemoveButton(props) {
   const { row } = props;
 
-  const { data, setData } = useGoodsContext();
+  const { products, setProducts } = useProductsContext();
 
   const handleClick = () => {
-    const nextData = data.filter((el) => el.code !== row.code);
-    setData(nextData);
+    const nextProducts = products.filter(
+      (product) => product.code !== row.code
+    );
+    setProducts(nextProducts);
   };
 
   return (

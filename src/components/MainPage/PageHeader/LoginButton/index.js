@@ -12,13 +12,20 @@ import {
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
+import PropTypes from "prop-types";
 
 import { useDialogState } from "@hooks/useDialogState";
 import * as Q from "@queries";
 
 import { LoginForm } from "./LoginForm";
 
-export function LoginButton() {
+LoginButton.propTypes = {
+  isAuthorized: PropTypes.bool
+};
+
+export function LoginButton(props) {
+  const { isAuthorized } = props;
+
   const { enqueueSnackbar } = useSnackbar();
 
   const formId = useId();
@@ -40,13 +47,13 @@ export function LoginButton() {
       <IconButton onClick={onOpen}>
         <LoginIcon sx={{ color: "#FFFFFF" }} />
       </IconButton>
-      <Dialog open={isOpen}>
+      <Dialog open={isOpen || !isAuthorized}>
         <DialogTitle>Авторизація</DialogTitle>
         <DialogContent style={{ paddingTop: "12px" }}>
           <LoginForm id={formId} onSubmit={mutate} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Закрити</Button>
+          {isAuthorized && <Button onClick={onClose}>Закрити</Button>}
           <LoadingButton
             type="submit"
             form={formId}

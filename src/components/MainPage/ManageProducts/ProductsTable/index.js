@@ -1,26 +1,26 @@
 import { DataGrid } from "@mui/x-data-grid";
 
 import { isNullable } from "../../../../utils";
-import { useGoodsContext } from "../GoodsContext";
+import { useProductsContext } from "../ProductsContext";
 
 import { columns } from "./columns";
 
-export function GoodsTable() {
-  const { data, setData } = useGoodsContext();
+export function ProductsTable() {
+  const { products, setProducts } = useProductsContext();
 
   const processRowUpdate = (newRow, _originalRow) => {
-    setData((draftData) => {
-      const draftRowIndex = draftData.findIndex(
-        (el) => el.code === newRow.code
+    setProducts((draftProducts) => {
+      const productIndex = draftProducts.findIndex(
+        (product) => product.code === newRow.code
       );
-      draftData[draftRowIndex] = newRow;
+      draftProducts[productIndex] = newRow;
     });
     return newRow;
   };
 
   return (
     <DataGrid
-      rows={data}
+      rows={products}
       columns={columns}
       hideFooter
       disableColumnMenu

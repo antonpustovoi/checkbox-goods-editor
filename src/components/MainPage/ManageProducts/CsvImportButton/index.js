@@ -1,13 +1,13 @@
 import { Button } from "@mui/material";
 import Papa from "papaparse";
 
-import { useGoodsContext } from "../GoodsContext";
+import { useProductsContext } from "../ProductsContext";
 
 export function CsvImportButton() {
-  const { setData } = useGoodsContext();
+  const { setProducts } = useProductsContext();
 
   const handleComplete = (results) => {
-    const nextData = [];
+    const data = [];
     results.data.forEach((el, index) => {
       if (!index) return;
       const [
@@ -26,7 +26,7 @@ export function CsvImportButton() {
         is_weight: is_weight === "true",
         related_barcodes: related_barcodes
       };
-      nextData.push({
+      data.push({
         ...initData,
         purchasePrice: Number(purchasePrice),
         margin: Number(margin),
@@ -35,7 +35,7 @@ export function CsvImportButton() {
         original: initData
       });
     });
-    setData(nextData);
+    setProducts(data);
   };
 
   const handleChange = (event) => {

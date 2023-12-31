@@ -1,7 +1,7 @@
 import CheckIcon from "@mui/icons-material/Check";
 import PropTypes from "prop-types";
 
-import { useGoodsContext } from "../../GoodsContext";
+import { useProductsContext } from "../../ProductsContext";
 
 CheckCell.propTypes = {
   field: PropTypes.string,
@@ -11,12 +11,14 @@ CheckCell.propTypes = {
 export function CheckCell(props) {
   const { field, row } = props;
 
-  const { setData } = useGoodsContext();
+  const { setProducts } = useProductsContext();
 
   const handleClick = () =>
-    setData((draftData) => {
-      const foundEl = draftData.find((el) => el.code === row.code);
-      foundEl[field] = !foundEl[field];
+    setProducts((draftProducts) => {
+      const foundProduct = draftProducts.find(
+        (product) => product.code === row.code
+      );
+      foundProduct[field] = !foundProduct[field];
     });
 
   return (

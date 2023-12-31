@@ -21,8 +21,8 @@ export function AddBarcodeField(props) {
   const [inputValue, setInputValue] = useState("");
 
   const { data, isFetching } = useQuery({
-    queryKey: ["Good", inputValue],
-    queryFn: Q.getGood,
+    queryKey: ["Product", inputValue],
+    queryFn: Q.getProduct,
     enabled: Boolean(inputValue),
     gcTime: 0
   });

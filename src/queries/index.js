@@ -30,6 +30,7 @@ export const authorize = async (data) => {
     body: JSON.stringify({ pin_code: pinCode })
   });
   window.localStorage.setItem("token", response["access_token"]);
+  window.location.reload();
 };
 
 const getProductObject = (srcObject) => ({
@@ -41,14 +42,14 @@ const getProductObject = (srcObject) => ({
   related_barcodes: srcObject.related_barcodes
 });
 
-export const getGoods = async ({ queryKey, pageParam }) => {
+export const getProducts = async ({ queryKey, pageParam }) => {
   const [, inputValue, limit] = queryKey;
   const searchParams = new URLSearchParams({
     query: inputValue,
     limit,
     offset: pageParam * limit
   });
-  const response = await apiCall(Endpoints.GoodsUrl(searchParams), {
+  const response = await apiCall(Endpoints.ProductsUrl(searchParams), {
     method: "GET"
   });
   return {
@@ -57,10 +58,10 @@ export const getGoods = async ({ queryKey, pageParam }) => {
   };
 };
 
-export const getGood = async ({ queryKey }) => {
+export const getProduct = async ({ queryKey }) => {
   const [, query] = queryKey;
   const searchParams = new URLSearchParams({ query, limit: 1 });
-  const response = await apiCall(Endpoints.GoodsUrl(searchParams), {
+  const response = await apiCall(Endpoints.ProductsUrl(searchParams), {
     method: "GET"
   });
   return response.results[0] ? getProductObject(response.results[0]) : null;
@@ -69,9 +70,12 @@ export const getGood = async ({ queryKey }) => {
 export const getImportStatus = async (taskId) => {
   const shouldGetStatus = true;
   while (shouldGetStatus) {
-    const { status } = await apiCall(Endpoints.GoodsImportStatusUrl(taskId), {
-      method: "GET"
-    });
+    const { status } = await apiCall(
+      Endpoints.ProductsImportStatusUrl(taskId),
+      {
+        method: "GET"
+      }
+    );
     if (["completed", "done"].includes(status)) {
       return status;
     } else {
@@ -80,7 +84,7 @@ export const getImportStatus = async (taskId) => {
   }
 };
 
-export const saveGoods = async (data) => {
+export const saveProducts = async (data) => {
   const payloadData = {
     goods: data.map((el) => ({
       code: el.code,
@@ -97,17 +101,17 @@ export const saveGoods = async (data) => {
     { type: "application/json" }
   );
   formData.append("file", file);
-  const response = await apiCall(Endpoints.UploadGoodsUrl(), {
+  const response = await apiCall(Endpoints.UploadProductsUrl(), {
     method: "POST",
     body: formData
   });
   await getImportStatus(response.task_id);
-  await apiCall(Endpoints.GoodsImportApplyChangesUrl(response.task_id), {
+  await apiCall(Endpoints.ProductsImportApplyChangesUrl(response.task_id), {
     method: "POST"
   });
   await getImportStatus(response.task_id);
   const responses = await Promise.all(
-    data.map((el) => getGood({ queryKey: ["Good", el.code] }))
+    data.map((el) => getProduct({ queryKey: ["Product", el.code] }))
   );
   return data.map((el, index) => ({ ...el, original: responses[index] }));
 };

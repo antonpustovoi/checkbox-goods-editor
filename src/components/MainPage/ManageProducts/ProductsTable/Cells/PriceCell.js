@@ -3,7 +3,7 @@ import ArrowUpward from "@mui/icons-material/ArrowUpward";
 import { IconButton } from "@mui/material";
 import PropTypes from "prop-types";
 
-import { useGoodsContext } from "../../GoodsContext";
+import { useProductsContext } from "../../ProductsContext";
 
 PriceCell.propTypes = {
   row: PropTypes.object
@@ -12,24 +12,30 @@ PriceCell.propTypes = {
 export function PriceCell(props) {
   const { code, price, original } = props.row;
 
-  const { setData } = useGoodsContext();
+  const { setProducts } = useProductsContext();
 
   const handleCeilClick = (e) =>
-    setData((draftData) => {
-      const foundEl = draftData.find((el) => el.code === code);
-      foundEl.price = Math.ceil(price);
+    setProducts((draftProducts) => {
+      const foundProduct = draftProducts.find(
+        (product) => product.code === code
+      );
+      foundProduct.price = Math.ceil(price);
     });
 
   const handleFiftyClick = () =>
-    setData((draftData) => {
-      const foundEl = draftData.find((el) => el.code === code);
-      foundEl.price = Math.trunc(price) + 0.5;
+    setProducts((draftProducts) => {
+      const foundProduct = draftProducts.find(
+        (product) => product.code === code
+      );
+      foundProduct.price = Math.trunc(price) + 0.5;
     });
 
   const handleFloorClick = () =>
-    setData((draftData) => {
-      const foundEl = draftData.find((el) => el.code === code);
-      foundEl.price = Math.floor(price);
+    setProducts((draftProducts) => {
+      const foundProduct = draftProducts.find(
+        (product) => product.code === code
+      );
+      foundProduct.price = Math.floor(price);
     });
 
   const iconButtonProps = {

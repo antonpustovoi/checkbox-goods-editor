@@ -6,7 +6,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useDebounce } from "@hooks/useDebounce";
 import * as Q from "@queries";
 
-import { useGoodsContext } from "../GoodsContext";
+import { useProductsContext } from "../ProductsContext";
 
 import { ListboxComponent } from "./ListboxComponent";
 import { css } from "./css";
@@ -15,17 +15,13 @@ const DEFAULT_LIMIT = 25;
 const DEBOUNCE_DELAY = 200;
 
 export function SelectProductField() {
-  const { data, setData } = useGoodsContext();
+  const { products, setProducts } = useProductsContext();
 
   const [inputValue, setInputValue] = useState("");
 
-  const {
-    data: goods,
-    isFetching,
-    fetchNextPage
-  } = useInfiniteQuery({
-    queryKey: ["Goods", inputValue, DEFAULT_LIMIT],
-    queryFn: Q.getGoods,
+  const { data, isFetching, fetchNextPage } = useInfiniteQuery({
+    queryKey: ["Products", inputValue, DEFAULT_LIMIT],
+    queryFn: Q.getProducts,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       if (lastPage.data.length >= DEFAULT_LIMIT) {
@@ -39,11 +35,11 @@ export function SelectProductField() {
   const debounceSetInputValue = useDebounce(setInputValue, DEBOUNCE_DELAY);
 
   const options = useMemo(() => {
-    const options = goods?.pages.map((page) => page.data).flat() || [];
+    const options = data?.pages.map((page) => page.data).flat() || [];
     return options.filter((option) =>
-      data.every((el) => el.code !== option.code)
+      products.every((product) => product.code !== option.code)
     );
-  }, [goods, data]);
+  }, [data, products]);
 
   const handleBottomScroll = () => fetchNextPage({ cancelRefetch: false });
 
@@ -55,7 +51,7 @@ export function SelectProductField() {
       marked: false,
       original: value
     };
-    setData([...data, nextValue]);
+    setProducts([...products, nextValue]);
   };
 
   const handleInputChange = (_event, value, reason) =>
