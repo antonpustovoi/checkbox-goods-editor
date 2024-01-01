@@ -1,6 +1,8 @@
 import { Button } from "@mui/material";
 import Papa from "papaparse";
 
+import { getNumberValue } from "@utils";
+
 import { useProductsContext } from "../ProductsContext";
 
 export function CsvImportButton() {
@@ -20,17 +22,17 @@ export function CsvImportButton() {
         related_barcodes
       ] = el;
       const initData = {
-        code,
+        code: Number(code),
         name,
-        price: null,
+        price: 0,
         is_weight: is_weight === "true",
-        related_barcodes: related_barcodes
+        related_barcodes
       };
       data.push({
         ...initData,
-        purchasePrice: Number(purchasePrice),
-        margin: Number(margin),
-        price: Number(price),
+        purchasePrice: getNumberValue(purchasePrice),
+        margin: getNumberValue(margin),
+        price: getNumberValue(price),
         marked: false,
         original: initData
       });

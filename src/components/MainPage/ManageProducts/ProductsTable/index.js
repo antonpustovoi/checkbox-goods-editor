@@ -1,6 +1,5 @@
 import { DataGrid } from "@mui/x-data-grid";
 
-import { isNullable } from "../../../../utils";
 import { useProductsContext } from "../ProductsContext";
 
 import { columns } from "./columns";
@@ -8,7 +7,7 @@ import { columns } from "./columns";
 export function ProductsTable() {
   const { products, setProducts } = useProductsContext();
 
-  const processRowUpdate = (newRow, _originalRow) => {
+  const processRowUpdate = (newRow) => {
     setProducts((draftProducts) => {
       const productIndex = draftProducts.findIndex(
         (product) => product.code === newRow.code
@@ -17,6 +16,12 @@ export function ProductsTable() {
     });
     return newRow;
   };
+
+  const getCellClassName = ({ field, row }) =>
+    ["name", "price", "is_weight", "related_barcodes"].includes(field) &&
+    row.original[field] !== row[field]
+      ? "changed-cell"
+      : "";
 
   return (
     <DataGrid
@@ -28,29 +33,11 @@ export function ProductsTable() {
       localeText={{
         noRowsLabel: "Список порожній"
       }}
-      sort
       getRowId={(row) => row.code}
-      getCellClassName={(params) => {
-        const { field, row } = params;
-        const originalValue = row.original[field];
-        const value = row[field];
-
-        const isValueChanged = Boolean(
-          ["name", "price", "is_weight", "related_barcodes"].includes(field) &&
-            !isNullable(originalValue) &&
-            !isNullable(value) &&
-            originalValue !== value
-        );
-        if (isValueChanged) {
-          return "cell-changed";
-        }
-      }}
+      getCellClassName={getCellClassName}
       sx={{
-        "& .cell-changed": {
+        "& .changed-cell": {
           backgroundColor: "#B7EDFF"
-        },
-        "& .MuiInputBase-root > input": {
-          padding: "0 10px"
         }
       }}
     />

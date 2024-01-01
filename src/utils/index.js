@@ -1,6 +1,7 @@
 import Papa from "papaparse";
 
-export const isNullable = (value) => value === null || value === undefined;
+export const getNumberValue = (value, digitsAfterPoint = 2) =>
+  Math.trunc(value * 10 ** digitsAfterPoint) / 10 ** digitsAfterPoint;
 
 export const downloadFile = (data, filename) => {
   const link = document.createElement("a");

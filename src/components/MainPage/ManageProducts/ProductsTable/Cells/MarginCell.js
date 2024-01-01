@@ -18,7 +18,7 @@ export function MarginCell(props) {
       <div>{margin}</div>
       {Boolean(purchasePrice && margin) && (
         <div css={{ color: "#707070" }}>
-          ({Number(purchasePrice + purchasePrice * (margin / 100)).toFixed(2)})
+          ({Number(purchasePrice * (1 + margin / 100)).toFixed(2)})
         </div>
       )}
     </div>

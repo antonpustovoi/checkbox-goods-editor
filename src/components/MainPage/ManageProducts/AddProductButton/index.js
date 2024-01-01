@@ -10,13 +10,13 @@ export function AddProductButton() {
       const initProduct = {
         code: Date.now(),
         name: "",
-        price: null,
+        price: 0,
         is_weight: false,
         related_barcodes: ""
       };
       const initialValues = {
         ...initProduct,
-        purchasePrice: null,
+        purchasePrice: 0,
         margin: 25,
         marked: false,
         original: initProduct

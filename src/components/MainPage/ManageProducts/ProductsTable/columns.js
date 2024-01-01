@@ -1,64 +1,72 @@
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 
+import { getNumberValue } from "@utils";
+
 import { BarcodeEditableCell } from "./Cells/BarcodeEditableCell";
 import { CheckCell } from "./Cells/CheckCell";
 import { DefaultCell } from "./Cells/DefaultCell";
+import { DefaultEditCell } from "./Cells/DefaultEditCell";
 import { MarginCell } from "./Cells/MarginCell";
 import { PriceCell } from "./Cells/PriceCell";
 import { RemoveButton } from "./RemoveButton";
+
+const getPrice = (purchasePrice, margin) =>
+  getNumberValue(purchasePrice) * (1 + getNumberValue(margin) / 100);
 
 export const columns = [
   {
     headerName: "Код",
     field: "code",
-    width: 140
+    width: 130
   },
   {
     headerName: "Назва",
     field: "name",
     flex: 1,
     editable: true,
-    renderCell: (props) => <DefaultCell {...props} />
+    renderCell: (params) => <DefaultCell {...params} />,
+    renderEditCell: (params) => <DefaultEditCell {...params} />
   },
   {
     headerName: "Ціна закупки",
     field: "purchasePrice",
+    width: 104,
     editable: true,
     type: "number",
-    renderCell: ({ value }) => (value ? Number(value).toFixed(2) : ""),
     valueSetter: ({ value, row }) => ({
       ...row,
-      purchasePrice: value,
-      price: value && row.margin ? value + value * (row.margin / 100) : null
-    })
+      purchasePrice: getNumberValue(value),
+      price: getPrice(value, row.margin)
+    }),
+    renderCell: ({ value }) => (value ? Number(value).toFixed(2) : "-"),
+    renderEditCell: (params) => <DefaultEditCell {...params} />
   },
   {
     headerName: "Націнка (%)",
     field: "margin",
+    width: 100,
     editable: true,
     type: "number",
     valueSetter: ({ value, row }) => ({
       ...row,
-      margin: value,
-      price:
-        value && row.purchasePrice
-          ? row.purchasePrice + row.purchasePrice * (value / 100)
-          : null
+      margin: getNumberValue(value),
+      price: getPrice(row.purchasePrice, value)
     }),
-    renderCell: (props) => <MarginCell {...props} />
+    renderCell: (params) => <MarginCell {...params} />,
+    renderEditCell: (params) => <DefaultEditCell {...params} />
   },
   {
     headerName: "Нова Ціна",
     field: "price",
+    width: 114,
     editable: true,
     type: "number",
-    width: 114,
-    renderCell: (props) => <PriceCell {...props} />
+    renderCell: (params) => <PriceCell {...params} />,
+    renderEditCell: (params) => <DefaultEditCell {...params} />
   },
   {
     headerName: "Поточна Ціна",
     field: "originalPrice",
-    type: "number",
     width: 110,
     renderCell: ({ row }) =>
       row.original.price ? Number(row.original.price).toFixed(2) : "-"
@@ -67,20 +75,21 @@ export const columns = [
     headerName: "Ваговий",
     field: "is_weight",
     width: 74,
-    renderCell: (props) => <CheckCell {...props} />
+    renderCell: (params) => <CheckCell {...params} />
   },
   {
     headerName: "Маркований",
     field: "marked",
     width: 102,
-    renderCell: (props) => <CheckCell {...props} />
+    renderCell: (params) => <CheckCell {...params} />
   },
   {
     headerName: "Штрих-коди",
     field: "related_barcodes",
+    width: 100,
     editable: true,
-    renderCell: (props) => <DefaultCell {...props} />,
-    renderEditCell: (props) => <BarcodeEditableCell {...props} />
+    renderCell: (params) => <DefaultCell {...params} />,
+    renderEditCell: (params) => <BarcodeEditableCell {...params} />
   },
   {
     headerName: "Збережено",
@@ -98,9 +107,9 @@ export const columns = [
   {
     headerName: "Дії",
     field: "actions",
-    headerAlign: "center",
     width: 60,
-    renderCell: (props) => <RemoveButton {...props} />
+    headerAlign: "center",
+    renderCell: (params) => <RemoveButton {...params} />
   }
 ];
 
