@@ -7,16 +7,19 @@ import { CircularProgress, IconButton, OutlinedInput } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 
+import { useProductsContext } from "@components/MainPage/ManageProducts/ProductsContext";
 import * as Q from "@queries";
 
 AddBarcodeField.propTypes = {
+  currentValues: PropTypes.array,
   row: PropTypes.object,
-  values: PropTypes.array,
   onAdd: PropTypes.func
 };
 
 export function AddBarcodeField(props) {
-  const { row, values, onAdd } = props;
+  const { currentValues, row, onAdd } = props;
+
+  const { products } = useProductsContext();
 
   const [inputValue, setInputValue] = useState("");
 
@@ -28,7 +31,13 @@ export function AddBarcodeField(props) {
   });
 
   const isBarcodeExist = Boolean(
-    data && (data.code !== row.code || values.includes(inputValue))
+    currentValues.includes(inputValue) ||
+      products.some(
+        (product) =>
+          product.code !== row.code &&
+          product.related_barcodes.split(",").includes(inputValue)
+      ) ||
+      (data && products.every((product) => product.code !== data.code))
   );
 
   const isError = Boolean(inputValue && !isFetching && isBarcodeExist);

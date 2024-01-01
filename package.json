@@ -35,7 +35,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "PUBLIC_URL=/checkbox-products-editor react-app-rewired build",
+    "build": "PUBLIC_URL=/checkbox-products-editor BUILD_PATH='./docs' react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },

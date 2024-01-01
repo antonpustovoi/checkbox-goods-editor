@@ -35,11 +35,11 @@ export const authorize = async (data) => {
 
 const getProductObject = (srcObject) => ({
   id: srcObject.id,
-  code: srcObject.code,
+  code: Number(srcObject.code),
   name: srcObject.name,
   price: srcObject.price / 100,
   is_weight: srcObject.is_weight,
-  related_barcodes: srcObject.related_barcodes
+  related_barcodes: srcObject.related_barcodes || ""
 });
 
 export const getProducts = async ({ queryKey, pageParam }) => {

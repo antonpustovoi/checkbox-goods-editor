@@ -22,7 +22,7 @@ export function DefaultCell(props) {
   return (
     <Tooltip title={title}>
       <span css={{ overflow: "hidden", textOverflow: "ellipsis" }}>
-        {row[field] || row.original[field]}
+        {row[field] ?? row.original[field]}
       </span>
     </Tooltip>
   );

@@ -2,7 +2,7 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 
 import { getNumberValue } from "@utils";
 
-import { BarcodeEditableCell } from "./Cells/BarcodeEditableCell";
+import { BarcodesEditCell } from "./Cells/BarcodesEditCell";
 import { CheckCell } from "./Cells/CheckCell";
 import { DefaultCell } from "./Cells/DefaultCell";
 import { DefaultEditCell } from "./Cells/DefaultEditCell";
@@ -89,7 +89,7 @@ export const columns = [
     width: 100,
     editable: true,
     renderCell: (params) => <DefaultCell {...params} />,
-    renderEditCell: (params) => <BarcodeEditableCell {...params} />
+    renderEditCell: (params) => <BarcodesEditCell {...params} />
   },
   {
     headerName: "Збережено",

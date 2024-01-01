@@ -12,14 +12,20 @@ import {
   OutlinedInput,
   TextField
 } from "@mui/material";
-import { useGridApiContext } from "@mui/x-data-grid";
+import PropTypes from "prop-types";
 
 import { AddBarcodeField } from "./AddBarcodeField";
 
-export function BarcodeEditableCell(props) {
-  const { api, value, id, field, hasFocus, row } = props;
+BarcodesEditCell.propTypes = {
+  id: PropTypes.number,
+  field: PropTypes.string,
+  value: PropTypes.string,
+  row: PropTypes.object,
+  api: PropTypes.object
+};
 
-  const apiRef = useGridApiContext();
+export function BarcodesEditCell(props) {
+  const { id, field, value, row, api } = props;
 
   const initBarcodes = value ? value.split(",").map((el) => el.trim()) : [];
 
@@ -28,7 +34,7 @@ export function BarcodeEditableCell(props) {
   const handleClose = () => api.stopCellEditMode({ id, field });
 
   const handleSave = () => {
-    apiRef.current.setEditCellValue({ id, field, value: barcodes.join(",") });
+    api.setEditCellValue({ id, field, value: barcodes.join(",") });
     api.stopCellEditMode({ id, field });
   };
 
@@ -51,7 +57,11 @@ export function BarcodeEditableCell(props) {
   return (
     <>
       <span
-        css={{ padding: "0 8px", overflow: "hidden", textOverflow: "ellipsis" }}
+        css={{
+          padding: "0 8px",
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }}
       >
         {value}
       </span>
@@ -69,7 +79,11 @@ export function BarcodeEditableCell(props) {
             </Grid>
             {barcodes.map(renderBarcodeField)}
             <Grid xs={12} sx={{ display: "flex", alignItems: "center" }}>
-              <AddBarcodeField row={row} values={barcodes} onAdd={handleAdd} />
+              <AddBarcodeField
+                currentValues={barcodes}
+                row={row}
+                onAdd={handleAdd}
+              />
             </Grid>
           </Grid>
         </DialogContent>
