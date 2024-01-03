@@ -1,7 +1,8 @@
 import Papa from "papaparse";
 
 export const getNumberValue = (value, digitsAfterPoint = 2) =>
-  Math.trunc(value * 10 ** digitsAfterPoint) / 10 ** digitsAfterPoint;
+  Math.trunc(Number(value * 10 ** digitsAfterPoint).toPrecision(10)) /
+  10 ** digitsAfterPoint;
 
 export const downloadFile = (data, filename) => {
   const link = document.createElement("a");

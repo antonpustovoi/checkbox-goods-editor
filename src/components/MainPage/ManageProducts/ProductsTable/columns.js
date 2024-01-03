@@ -11,7 +11,9 @@ import { PriceCell } from "./Cells/PriceCell";
 import { RemoveButton } from "./RemoveButton";
 
 const getPrice = (purchasePrice, margin) =>
-  getNumberValue(purchasePrice) * (1 + getNumberValue(margin) / 100);
+  getNumberValue(
+    getNumberValue(purchasePrice) * (1 + getNumberValue(margin) / 100)
+  );
 
 export const columns = [
   {
@@ -61,6 +63,10 @@ export const columns = [
     width: 114,
     editable: true,
     type: "number",
+    valueSetter: ({ value, row }) => ({
+      ...row,
+      price: getNumberValue(value)
+    }),
     renderCell: (params) => <PriceCell {...params} />,
     renderEditCell: (params) => <DefaultEditCell {...params} />
   },
