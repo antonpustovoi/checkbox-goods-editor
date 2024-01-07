@@ -40,6 +40,9 @@ export function BarcodesEditCell(props) {
 
   const handleAdd = (value) => setBarcodes([...barcodes, value]);
 
+  const handleKeyDown = (event) =>
+    event.key === "Enter" && event.stopPropagation();
+
   const renderBarcodeField = (value) => {
     const handleRemove = () =>
       setBarcodes(barcodes.filter((barcode) => barcode !== value));
@@ -65,7 +68,7 @@ export function BarcodesEditCell(props) {
       >
         {value}
       </span>
-      <Dialog open fullWidth>
+      <Dialog open fullWidth onKeyDown={handleKeyDown}>
         <DialogTitle>Редагування штрих-кодів</DialogTitle>
         <DialogContent style={{ paddingTop: "12px" }}>
           <Grid container spacing={2}>

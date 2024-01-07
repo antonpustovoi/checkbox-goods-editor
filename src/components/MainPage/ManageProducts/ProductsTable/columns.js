@@ -2,6 +2,7 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 
 import { getNumberValue } from "@utils";
 
+import { AddBarcodeButton } from "./AddBarcodeButton";
 import { BarcodesEditCell } from "./Cells/BarcodesEditCell";
 import { CheckCell } from "./Cells/CheckCell";
 import { DefaultCell } from "./Cells/DefaultCell";
@@ -113,9 +114,14 @@ export const columns = [
   {
     headerName: "Дії",
     field: "actions",
-    width: 60,
+    width: 100,
     headerAlign: "center",
-    renderCell: (params) => <RemoveButton {...params} />
+    renderCell: (params) => (
+      <>
+        <AddBarcodeButton {...params} />
+        <RemoveButton {...params} />
+      </>
+    )
   }
 ];
 
