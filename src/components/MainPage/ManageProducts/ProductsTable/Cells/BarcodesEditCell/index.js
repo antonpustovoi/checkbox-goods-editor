@@ -27,7 +27,7 @@ BarcodesEditCell.propTypes = {
 export function BarcodesEditCell(props) {
   const { id, field, value, row, api } = props;
 
-  const initBarcodes = value ? value.split(",").map((el) => el.trim()) : [];
+  const initBarcodes = value ? value.split(",") : [];
 
   const [barcodes, setBarcodes] = useState(initBarcodes);
 

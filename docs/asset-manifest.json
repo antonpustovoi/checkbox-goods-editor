@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/checkbox-products-editor/static/js/main.8156c675.js",
+    "main.js": "/checkbox-products-editor/static/js/main.6f3ee3f8.js",
     "static/js/787.2ca297d2.chunk.js": "/checkbox-products-editor/static/js/787.2ca297d2.chunk.js",
     "index.html": "/checkbox-products-editor/index.html",
-    "main.8156c675.js.map": "/checkbox-products-editor/static/js/main.8156c675.js.map",
+    "main.6f3ee3f8.js.map": "/checkbox-products-editor/static/js/main.6f3ee3f8.js.map",
     "787.2ca297d2.chunk.js.map": "/checkbox-products-editor/static/js/787.2ca297d2.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.8156c675.js"
+    "static/js/main.6f3ee3f8.js"
   ]
 }

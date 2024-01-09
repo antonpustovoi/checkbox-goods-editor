@@ -46,10 +46,7 @@ export function AddBarcodeDialogContent(props) {
     const data = await mutateAsync({ queryKey: [null, inputValue] });
     const isBarcodeExist = Boolean(
       products.some((product) =>
-        product.related_barcodes
-          .split(",")
-          .map((barcode) => barcode.trim())
-          .includes(inputValue)
+        product.related_barcodes.split(",").includes(inputValue)
       ) ||
         (data && products.every((product) => product.code !== data.code))
     );
@@ -64,7 +61,7 @@ export function AddBarcodeDialogContent(props) {
           (product) => product.code === currentRow.code
         );
         foundProduct.related_barcodes = foundProduct.related_barcodes
-          ? foundProduct.related_barcodes.concat(`, ${inputValue}`)
+          ? foundProduct.related_barcodes.concat(`,${inputValue}`)
           : inputValue;
       });
       enqueueSnackbar("Штрих-код був доданий успішно", {
