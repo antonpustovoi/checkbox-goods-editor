@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import * as Q from "queries/index";
 
 import { useProductsContext } from "../../ProductsContext";
+
 import { MenuItem } from "./MenuItem";
 
 SaveProductMenuItem.propTypes = {
@@ -29,8 +30,8 @@ export function SaveProductMenuItem(props) {
   const isDisabled = Boolean(
     isPending ||
       ["code", "name", "price", "is_weight", "related_barcodes"].every(
-        (field) => row[field] === row.original[field]
-      )
+        (field) => row[field] === row.original[field],
+      ),
   );
 
   const handleClick = () => mutate(row);

@@ -15,7 +15,7 @@ export function ProductsTable() {
   const getRowClassName = ({ row }) =>
     row.original.id &&
     ["code", "name", "price", "is_weight", "related_barcodes"].every(
-      (field) => row[field] === row.original[field]
+      (field) => row[field] === row.original[field],
     )
       ? "saved-data"
       : "";

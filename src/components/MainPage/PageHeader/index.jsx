@@ -6,7 +6,7 @@ import { LoginButton } from "./LoginButton";
 import { css } from "./css";
 
 PageHeader.propTypes = {
-  isAuthorized: PropTypes.bool
+  isAuthorized: PropTypes.bool,
 };
 
 export function PageHeader(props) {

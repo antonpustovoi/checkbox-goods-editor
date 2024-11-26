@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import * as Q from "queries/index";
 
 import { useProductsContext } from "../../ProductsContext";
+
 import { MenuItem } from "./MenuItem";
 
 SyncProductMenuItem.propTypes = {

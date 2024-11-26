@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 
 LoginForm.propTypes = {
   id: PropTypes.string,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
 };
 
 export function LoginForm(props) {
@@ -13,8 +13,8 @@ export function LoginForm(props) {
   const form = useForm({
     defaultValues: {
       licenseKey: "",
-      pinCode: ""
-    }
+      pinCode: "",
+    },
   });
 
   const renderField = (name, label) => (

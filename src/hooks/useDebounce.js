@@ -9,6 +9,6 @@ export function useDebounce(callback, time) {
 
   return useMemo(
     () => _debounce((...args) => callbackRef.current(...args), time),
-    [time]
+    [time],
   );
 }

@@ -3,7 +3,9 @@ import { Dialog } from "@mui/material";
 import PropTypes from "prop-types";
 
 import { useDialogState } from "hooks/useDialogState";
+
 import { MenuItem } from "../MenuItem";
+
 import { RemoveFromDatabaseDialogContent } from "./RemoveFromDatabaseDialogContent";
 
 RemoveFromDatabaseMenuItem.propTypes = {

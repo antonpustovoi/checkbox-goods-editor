@@ -3,8 +3,9 @@ import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import PropTypes from "prop-types";
 
 import { useProductsContext } from "../../ProductsContext";
-import { MenuItem } from "./MenuItem";
 import { getInitialProduct } from "../../utils";
+
+import { MenuItem } from "./MenuItem";
 
 AddRowMenuItems.propTypes = {
   row: PropTypes.object,

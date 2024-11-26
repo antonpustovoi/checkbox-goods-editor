@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {
@@ -41,6 +41,11 @@ export function ManageProducts() {
     onSuccess: handleSuccess,
   });
 
+  const contextValue = useMemo(
+    () => ({ products, setProducts }),
+    [products, setProducts],
+  );
+
   const handleSave = () => mutate(products);
 
   const handleChange = () => setShouldAutoExport(!shouldAutoExport);
@@ -48,7 +53,7 @@ export function ManageProducts() {
   const handleProductChange = (value) => setProducts([...products, value]);
 
   return (
-    <ProductsContext.Provider value={{ products, setProducts }}>
+    <ProductsContext.Provider value={contextValue}>
       <Grid
         container
         direction="column"
@@ -84,8 +89,8 @@ export function ManageProducts() {
           (product) =>
             product.original.id &&
             ["code", "name", "price", "is_weight", "related_barcodes"].every(
-              (field) => product[field] === product.original[field]
-            )
+              (field) => product[field] === product.original[field],
+            ),
         ) && (
           <Grid
             container

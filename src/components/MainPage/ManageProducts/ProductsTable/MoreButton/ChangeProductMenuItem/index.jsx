@@ -2,8 +2,10 @@ import ChangeIcon from "@mui/icons-material/Cached";
 import { Dialog } from "@mui/material";
 import PropTypes from "prop-types";
 
-import { MenuItem } from "../MenuItem";
 import { useDialogState } from "hooks/useDialogState";
+
+import { MenuItem } from "../MenuItem";
+
 import { ChangeProductDialogContent } from "./ChangeProductDialogContent";
 
 ChangeProductMenuItem.propTypes = {

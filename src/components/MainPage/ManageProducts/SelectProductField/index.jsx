@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 import { useDebounce } from "hooks/useDebounce";
 import * as Q from "queries";
@@ -10,13 +11,12 @@ import * as Q from "queries";
 import { useProductsContext } from "../ProductsContext";
 
 import { css } from "./css";
-import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 const DEFAULT_LIMIT = 25;
 const DEBOUNCE_DELAY = 200;
 
 SelectProductField.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.object,
   onChange: PropTypes.func,
 };
 
@@ -27,6 +27,7 @@ export function SelectProductField(props) {
 
   const [inputValue, setInputValue] = useState("");
 
+  // eslint-disable-next-line sonarjs/hook-use-state
   const [, setListNode] = useState(null);
 
   const { data, isFetching, fetchNextPage } = useInfiniteQuery({
@@ -46,13 +47,13 @@ export function SelectProductField(props) {
 
   const scrollRef = useBottomScrollListener(
     () => fetchNextPage({ cancelRefetch: false }),
-    { offset: 100, debounce: 100 }
+    { offset: 100, debounce: 100 },
   );
 
   const options = useMemo(() => {
     const options = data?.pages.map((page) => page.data).flat() || [];
     return options.filter((option) =>
-      products.every((product) => product.code !== option.code)
+      products.every((product) => product.code !== option.code),
     );
   }, [data, products]);
 
@@ -126,7 +127,10 @@ export function SelectProductField(props) {
       onBlur={handleBlur}
       slotProps={{
         listbox: {
-          ref: (ref) => setListNode((scrollRef.current = ref)),
+          ref: (ref) => {
+            scrollRef.current = ref;
+            setListNode(ref);
+          },
           role: "list-box",
         },
       }}

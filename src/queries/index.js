@@ -19,7 +19,7 @@ const apiCall = async (endpoint, options) => {
 
 export const authorize = async (data) => {
   const { licenseKey, pinCode } = data;
-  const response = await apiCall(Endpoints.AuthorizeUrl(), {
+  const response = await apiCall(Endpoints.authorizeUrl(), {
     method: "POST",
     headers: {
       "X-License-Key": licenseKey,
@@ -46,7 +46,7 @@ export const getProducts = async ({ queryKey, pageParam }) => {
     limit,
     offset: pageParam * limit,
   });
-  const response = await apiCall(Endpoints.ProductsUrl(searchParams), {
+  const response = await apiCall(Endpoints.productsUrl(searchParams), {
     method: "GET",
   });
   return {
@@ -58,14 +58,14 @@ export const getProducts = async ({ queryKey, pageParam }) => {
 export const getProduct = async ({ queryKey }) => {
   const [, query] = queryKey;
   const searchParams = new URLSearchParams({ query, limit: 1 });
-  const response = await apiCall(Endpoints.ProductsUrl(searchParams), {
+  const response = await apiCall(Endpoints.productsUrl(searchParams), {
     method: "GET",
   });
   return response.results[0] ? getProductObject(response.results[0]) : null;
 };
 
 export const getProductById = async (data) => {
-  const response = await apiCall(Endpoints.ProductUrl(data.id), {
+  const response = await apiCall(Endpoints.productUrl(data.id), {
     method: "GET",
   });
   return getProductObject(response);
@@ -80,7 +80,7 @@ export const saveProduct = async (data) => {
     is_weight: data.is_weight,
     barcodes: data.related_barcodes?.split(",") || null,
   };
-  const response = await apiCall(Endpoints.ProductUrl(data.id), {
+  const response = await apiCall(Endpoints.productUrl(data.id), {
     method: data.id ? "PUT" : "POST",
     body: JSON.stringify(payload),
   });
@@ -96,5 +96,5 @@ export const saveProducts = async (data) => {
 };
 
 export const deleteProduct = async (data) => {
-  return apiCall(Endpoints.ProductUrl(data.id), { method: "DELETE" });
+  return apiCall(Endpoints.productUrl(data.id), { method: "DELETE" });
 };

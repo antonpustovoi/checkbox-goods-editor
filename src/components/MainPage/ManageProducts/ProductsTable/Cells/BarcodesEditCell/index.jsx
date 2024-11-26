@@ -10,7 +10,7 @@ import {
   Grid2 as Grid,
   IconButton,
   OutlinedInput,
-  TextField
+  TextField,
 } from "@mui/material";
 import PropTypes from "prop-types";
 
@@ -21,7 +21,7 @@ BarcodesEditCell.propTypes = {
   field: PropTypes.string,
   value: PropTypes.string,
   row: PropTypes.object,
-  api: PropTypes.object
+  api: PropTypes.object,
 };
 
 export function BarcodesEditCell(props) {
@@ -68,7 +68,7 @@ export function BarcodesEditCell(props) {
         css={{
           padding: "0 8px",
           overflow: "hidden",
-          textOverflow: "ellipsis"
+          textOverflow: "ellipsis",
         }}
       >
         {value}

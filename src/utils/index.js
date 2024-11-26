@@ -8,7 +8,7 @@ export const downloadFile = (data, filename) => {
   const link = document.createElement("a");
   link.setAttribute(
     "href",
-    "data:text/plain;charset=utf-8," + encodeURIComponent(data)
+    "data:text/plain;charset=utf-8," + encodeURIComponent(data),
   );
   link.setAttribute("download", filename);
   link.style.display = "none";

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 DefaultCell.propTypes = {
   field: PropTypes.string,
-  row: PropTypes.object
+  row: PropTypes.object,
 };
 
 export function DefaultCell(props) {
@@ -23,7 +23,7 @@ export function DefaultCell(props) {
                 {part.value.replace(" ", "\u00A0")}
               </span>
             );
-          }
+          },
         )}
       </div>
     ) : (

@@ -6,15 +6,18 @@ import { useProductsContext } from "../ProductsContext";
 
 RemoveFromListButton.propTypes = {
   row: PropTypes.object,
+  api: PropTypes.object,
 };
 
 export function RemoveFromListButton(props) {
-  const { row } = props;
+  const { row, api } = props;
 
   const { filterProducts } = useProductsContext();
 
-  const handleClick = () =>
+  const handleClick = () => {
     filterProducts((product) => product.code !== row.code);
+    api.updateRows([{ ...row, _action: "delete" }]);
+  };
 
   return (
     <IconButton onClick={handleClick}>

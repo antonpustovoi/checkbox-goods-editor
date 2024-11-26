@@ -3,6 +3,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import PropTypes from "prop-types";
 
 import { useProductsContext } from "../../ProductsContext";
+
 import { MenuItem } from "./MenuItem";
 
 MoveRowMenuItems.propTypes = {

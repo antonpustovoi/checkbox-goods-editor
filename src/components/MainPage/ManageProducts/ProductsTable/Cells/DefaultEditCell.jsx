@@ -6,9 +6,9 @@ export function DefaultEditCell(props) {
       slotProps={{
         input: {
           style: {
-            padding: "0 10px"
-          }
-        }
+            padding: "0 10px",
+          },
+        },
       }}
       onFocus={(event) => event.target.select()}
       {...props}

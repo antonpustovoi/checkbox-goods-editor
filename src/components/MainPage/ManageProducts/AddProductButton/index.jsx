@@ -6,8 +6,7 @@ import { getInitialProduct } from "../utils";
 export function AddProductButton() {
   const { products, addProduct } = useProductsContext();
 
-  const handleClick = () =>
-    addProduct(products.length - 1, getInitialProduct());
+  const handleClick = () => addProduct(products.length, getInitialProduct());
 
   return <Button onClick={handleClick}>Додати новий продукт</Button>;
 }

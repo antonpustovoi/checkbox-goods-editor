@@ -13,7 +13,7 @@ import * as Q from "queries";
 AddBarcodeField.propTypes = {
   currentValues: PropTypes.array,
   row: PropTypes.object,
-  onAdd: PropTypes.func
+  onAdd: PropTypes.func,
 };
 
 export function AddBarcodeField(props) {
@@ -27,7 +27,7 @@ export function AddBarcodeField(props) {
     queryKey: ["Product", inputValue],
     queryFn: Q.getProduct,
     enabled: Boolean(inputValue),
-    gcTime: 0
+    gcTime: 0,
   });
 
   const isBarcodeExist = Boolean(
@@ -35,9 +35,9 @@ export function AddBarcodeField(props) {
       products.some(
         (product) =>
           product.code !== row.code &&
-          product.related_barcodes.split(",").includes(inputValue)
+          product.related_barcodes.split(",").includes(inputValue),
       ) ||
-      (data && products.every((product) => product.code !== data.code))
+      (data && products.every((product) => product.code !== data.code)),
   );
 
   const isError = Boolean(inputValue && !isFetching && isBarcodeExist);

@@ -9,7 +9,7 @@ export const css = {
     zIndex: "2",
     backgroundColor: "#FFFFFFB0",
     "& > span": {
-      marginLeft: "10px"
-    }
-  }
+      marginLeft: "10px",
+    },
+  },
 };

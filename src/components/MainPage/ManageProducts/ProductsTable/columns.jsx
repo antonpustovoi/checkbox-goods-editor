@@ -12,14 +12,14 @@ import { RemoveFromListButton } from "./RemoveFromListButton";
 
 const getPrice = (purchasePrice, margin) =>
   getNumberValue(
-    getNumberValue(purchasePrice) * (1 + getNumberValue(margin) / 100)
+    getNumberValue(purchasePrice) * (1 + getNumberValue(margin) / 100),
   );
 
 export const columns = [
   {
     headerName: "Код",
     field: "code",
-    width: 124
+    width: 124,
   },
   {
     headerName: "Назва",
@@ -28,7 +28,7 @@ export const columns = [
     editable: true,
     valueSetter: (value, row) => ({ ...row, name: value.trim() }),
     renderCell: (params) => <DefaultCell {...params} />,
-    renderEditCell: (params) => <DefaultEditCell {...params} />
+    renderEditCell: (params) => <DefaultEditCell {...params} />,
   },
   {
     headerName: "Ціна закупки",
@@ -39,10 +39,10 @@ export const columns = [
     valueSetter: (value, row) => ({
       ...row,
       purchasePrice: getNumberValue(value),
-      price: getPrice(value, row.margin)
+      price: getPrice(value, row.margin),
     }),
     renderCell: ({ value }) => (value ? Number(value).toFixed(2) : "-"),
-    renderEditCell: (params) => <DefaultEditCell {...params} />
+    renderEditCell: (params) => <DefaultEditCell {...params} />,
   },
   {
     headerName: "Націнка (%)",
@@ -53,10 +53,10 @@ export const columns = [
     valueSetter: (value, row) => ({
       ...row,
       margin: getNumberValue(value),
-      price: getPrice(row.purchasePrice, value)
+      price: getPrice(row.purchasePrice, value),
     }),
     renderCell: (params) => <MarginCell {...params} />,
-    renderEditCell: (params) => <DefaultEditCell {...params} />
+    renderEditCell: (params) => <DefaultEditCell {...params} />,
   },
   {
     headerName: "Нова Ціна",
@@ -66,30 +66,30 @@ export const columns = [
     type: "number",
     valueSetter: (value, row) => ({
       ...row,
-      price: getNumberValue(value)
+      price: getNumberValue(value),
     }),
     renderCell: (params) => <PriceCell {...params} />,
-    renderEditCell: (params) => <DefaultEditCell {...params} />
+    renderEditCell: (params) => <DefaultEditCell {...params} />,
   },
   {
     headerName: "Поточна Ціна",
     field: "originalPrice",
     width: 110,
     renderCell: ({ row }) =>
-      row.original.price ? Number(row.original.price).toFixed(2) : "-"
+      row.original.price ? Number(row.original.price).toFixed(2) : "-",
   },
   {
     headerName: "Ваговий",
     field: "is_weight",
     width: 74,
-    renderCell: (params) => <CheckCell {...params} />
+    renderCell: (params) => <CheckCell {...params} />,
   },
   {
     headerName: "Маркований",
     field: "marked",
     width: 102,
     renderCell: (params) => <CheckCell {...params} />,
-    renderEditCell: (params) => <BarcodesEditCell {...params} />
+    renderEditCell: (params) => <BarcodesEditCell {...params} />,
   },
   {
     headerName: "Штрих-коди",
@@ -97,7 +97,7 @@ export const columns = [
     width: 100,
     editable: true,
     renderCell: (params) => <DefaultCell {...params} />,
-    renderEditCell: (params) => <BarcodesEditCell {...params} />
+    renderEditCell: (params) => <BarcodesEditCell {...params} />,
   },
   {
     headerName: "Дії",
@@ -110,8 +110,8 @@ export const columns = [
         <RemoveFromListButton {...params} />
         <MoreButton {...params} />
       </>
-    )
-  }
+    ),
+  },
 ];
 
 columns.forEach((column) => {

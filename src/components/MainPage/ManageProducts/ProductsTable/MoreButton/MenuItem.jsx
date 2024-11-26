@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
 import { ListItemIcon, MenuItem as MuiMenuItem } from "@mui/material";
+import PropTypes from "prop-types";
 
 MenuItem.propTypes = {
-  Icon: PropTypes.object,
+  icon: PropTypes.object,
 };
 
 export function MenuItem(props) {

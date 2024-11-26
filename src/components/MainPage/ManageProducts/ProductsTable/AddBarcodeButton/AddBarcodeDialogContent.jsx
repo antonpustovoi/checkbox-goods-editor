@@ -46,9 +46,9 @@ export function AddBarcodeDialogContent(props) {
     const data = await mutateAsync({ queryKey: [null, inputValue] });
     const isBarcodeExist = Boolean(
       products.some((product) =>
-        product.related_barcodes.split(",").includes(inputValue)
+        product.related_barcodes.split(",").includes(inputValue),
       ) ||
-        (data && products.every((product) => product.code !== data.code))
+        (data && products.every((product) => product.code !== data.code)),
     );
     if (isBarcodeExist) {
       enqueueSnackbar("Штрих-код вже існує", {

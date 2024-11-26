@@ -5,9 +5,9 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { useProductsContext } from "components/MainPage/ManageProducts/ProductsContext";
 import PropTypes from "prop-types";
 
+import { useProductsContext } from "components/MainPage/ManageProducts/ProductsContext";
 import * as Q from "queries/index";
 
 RemoveFromDatabaseDialogContent.propTypes = {

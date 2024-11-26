@@ -10,6 +10,6 @@ export function useImmer(initialValue) {
     useCallback((updater) => {
       if (typeof updater === "function") setValue(produce(updater));
       else setValue(freeze(updater));
-    }, [])
+    }, []),
   ];
 }
