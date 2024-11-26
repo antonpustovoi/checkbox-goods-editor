@@ -20,23 +20,25 @@ export const downloadFile = (data, filename) => {
 export const exportToCsvFile = (data) => {
   const csv = Papa.unparse({
     fields: [
+      "ID",
       "Код",
       "Назва продукту",
       "Ціна закупки",
       "Націнка",
       "Ціна",
       "Ваговий",
-      "Штрихкоди"
+      "Штрихкоди",
     ],
     data: data.map((el) => [
+      el.id,
       el.code,
       el.name,
       el.purchasePrice,
       el.margin,
       el.price,
       el.is_weight,
-      el.related_barcodes
-    ])
+      el.related_barcodes,
+    ]),
   });
   const filename = `products_${new Date()
     .toLocaleString()
