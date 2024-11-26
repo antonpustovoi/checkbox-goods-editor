@@ -5,13 +5,14 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(() => {
   return {
+    base: "/checkbox-products-editor",
     plugins: [
       react({ jsxImportSource: "@emotion/react" }),
       mkcert(),
-      tsconfigPaths()
+      tsconfigPaths(),
     ],
     build: {
-      outDir: "docs"
-    }
+      outDir: "docs",
+    },
   };
 });
