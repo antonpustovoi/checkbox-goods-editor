@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {
@@ -25,7 +25,12 @@ import { SelectProductField } from "./SelectProductField";
 import { css } from "./css";
 
 export function ManageProducts() {
-  const [products, setProducts] = useImmer([]);
+  const initialProducts = useMemo(() => {
+    const products = sessionStorage.getItem("products");
+    return products ? JSON.parse(products) : [];
+  }, []);
+
+  const [products, setProducts] = useImmer(initialProducts);
 
   const [shouldAutoExport, setShouldAutoExport] = useState(true);
 
@@ -43,8 +48,12 @@ export function ManageProducts() {
 
   const contextValue = useMemo(
     () => ({ products, setProducts }),
-    [products, setProducts],
+    [products, setProducts]
   );
+
+  useEffect(() => {
+    sessionStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
 
   const handleSave = () => mutate(products);
 
@@ -89,8 +98,8 @@ export function ManageProducts() {
           (product) =>
             product.original.id &&
             ["code", "name", "price", "is_weight", "related_barcodes"].every(
-              (field) => product[field] === product.original[field],
-            ),
+              (field) => product[field] === product.original[field]
+            )
         ) && (
           <Grid
             container
