@@ -30,7 +30,7 @@ export function RemoveFromDatabaseDialogContent(props) {
     onSuccess: handleSuccess,
   });
 
-  const handleRemove = () => mutate(data);
+  const handleRemove = () => mutate(data.original);
 
   return (
     <>

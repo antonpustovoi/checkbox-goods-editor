@@ -37,6 +37,7 @@ const getProductObject = (srcObject) => ({
   price: srcObject.price / 100,
   is_weight: srcObject.is_weight,
   related_barcodes: srcObject.related_barcodes || "",
+  updated_at: srcObject.updated_at,
 });
 
 export const getProducts = async ({ queryKey, pageParam }) => {

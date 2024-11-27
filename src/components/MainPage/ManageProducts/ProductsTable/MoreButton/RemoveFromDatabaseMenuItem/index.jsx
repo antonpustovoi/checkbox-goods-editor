@@ -19,7 +19,11 @@ export function RemoveFromDatabaseMenuItem(props) {
 
   return (
     <>
-      <MenuItem icon={<RemoveIcon />} disabled={!row.id} onClick={onOpen}>
+      <MenuItem
+        icon={<RemoveIcon />}
+        disabled={!row.original.id}
+        onClick={onOpen}
+      >
         Видалити з бази
       </MenuItem>
       <Dialog open={isOpen}>

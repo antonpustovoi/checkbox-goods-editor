@@ -48,7 +48,7 @@ export function ManageProducts() {
 
   const contextValue = useMemo(
     () => ({ products, setProducts }),
-    [products, setProducts]
+    [products, setProducts],
   );
 
   useEffect(() => {
@@ -98,8 +98,8 @@ export function ManageProducts() {
           (product) =>
             product.original.id &&
             ["code", "name", "price", "is_weight", "related_barcodes"].every(
-              (field) => product[field] === product.original[field]
-            )
+              (field) => product[field] === product.original[field],
+            ),
         ) && (
           <Grid
             container

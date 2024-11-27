@@ -1,5 +1,7 @@
 import { getNumberValue } from "utils";
 
+import { getPrice } from "../utils";
+
 import { AddBarcodeButton } from "./AddBarcodeButton";
 import { BarcodesEditCell } from "./Cells/BarcodesEditCell";
 import { CheckCell } from "./Cells/CheckCell";
@@ -9,11 +11,6 @@ import { MarginCell } from "./Cells/MarginCell";
 import { PriceCell } from "./Cells/PriceCell";
 import { MoreButton } from "./MoreButton";
 import { RemoveFromListButton } from "./RemoveFromListButton";
-
-const getPrice = (purchasePrice, margin) =>
-  getNumberValue(
-    getNumberValue(purchasePrice) * (1 + getNumberValue(margin) / 100),
-  );
 
 export const columns = [
   {
@@ -39,7 +36,21 @@ export const columns = [
     valueSetter: (value, row) => ({
       ...row,
       purchasePrice: getNumberValue(value),
-      price: getPrice(value, row.margin),
+      price: getPrice(value, row.quantity, row.margin),
+    }),
+    renderCell: ({ value }) => (value ? Number(value).toFixed(2) : "-"),
+    renderEditCell: (params) => <DefaultEditCell {...params} />,
+  },
+  {
+    headerName: "Кількість",
+    field: "quantity",
+    width: 80,
+    editable: true,
+    type: "number",
+    valueSetter: (value, row) => ({
+      ...row,
+      quantity: getNumberValue(value),
+      price: getPrice(row.purchasePrice, value, row.margin),
     }),
     renderCell: ({ value }) => (value ? Number(value).toFixed(2) : "-"),
     renderEditCell: (params) => <DefaultEditCell {...params} />,
@@ -53,7 +64,7 @@ export const columns = [
     valueSetter: (value, row) => ({
       ...row,
       margin: getNumberValue(value),
-      price: getPrice(row.purchasePrice, value),
+      price: getPrice(row.purchasePrice, row.quantity, value),
     }),
     renderCell: (params) => <MarginCell {...params} />,
     renderEditCell: (params) => <DefaultEditCell {...params} />,
@@ -98,6 +109,15 @@ export const columns = [
     editable: true,
     renderCell: (params) => <DefaultCell {...params} />,
     renderEditCell: (params) => <BarcodesEditCell {...params} />,
+  },
+  {
+    headerName: "Дата оновлення",
+    field: "updated_at",
+    width: 156,
+    renderCell: ({ row }) => {
+      const { updated_at } = row.original;
+      return Boolean(updated_at) && new Date(updated_at).toLocaleString();
+    },
   },
   {
     headerName: "Дії",

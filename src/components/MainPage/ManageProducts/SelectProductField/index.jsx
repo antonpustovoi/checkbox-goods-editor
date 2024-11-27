@@ -61,6 +61,7 @@ export function SelectProductField(props) {
     const nextValue = {
       ...value,
       purchasePrice: 0,
+      quantity: 1,
       margin: 25,
       marked: false,
       original: value,

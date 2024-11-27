@@ -14,20 +14,20 @@ export function CsvImportButton() {
 
   const handleComplete = async (results) => {
     const data = [];
-    results.data.forEach((el, index) => {
-      if (!index) return;
+    for (const el of results.data) {
+      if (results.data[0] === el) continue;
       const [
         id,
         code,
         name,
         purchasePrice,
+        quantity,
         margin,
         price,
         is_weight,
         related_barcodes,
       ] = el;
       const initData = {
-        id,
         code: Number(code),
         name,
         price: 0,
@@ -37,16 +37,12 @@ export function CsvImportButton() {
       data.push({
         ...initData,
         purchasePrice: getNumberValue(purchasePrice),
+        quantity: getNumberValue(quantity),
         margin: getNumberValue(margin),
         price: getNumberValue(price),
         marked: false,
-        original: initData,
+        original: id ? await mutateAsync({ id }) : initData,
       });
-    });
-    for (const el of data) {
-      if (el.id) {
-        el.original = await mutateAsync(el);
-      }
     }
     setProducts(data);
   };
