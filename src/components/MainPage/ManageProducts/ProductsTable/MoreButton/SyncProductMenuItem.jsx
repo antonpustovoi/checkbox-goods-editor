@@ -29,7 +29,7 @@ export function SyncProductMenuItem(props) {
 
   const isDisabled = Boolean(isPending || !row.original.id);
 
-  const handleClick = () => mutate(row);
+  const handleClick = () => mutate(row.original);
 
   return (
     <MenuItem icon={<SyncIcon />} disabled={isDisabled} onClick={handleClick}>

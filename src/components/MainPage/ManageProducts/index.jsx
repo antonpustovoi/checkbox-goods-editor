@@ -55,7 +55,13 @@ export function ManageProducts() {
     sessionStorage.setItem("products", JSON.stringify(products));
   }, [products]);
 
-  const handleSave = () => mutate(products);
+  const handleSave = () => {
+    const nextProducts = products.map((product) => ({
+      ...product,
+      id: product.original.id,
+    }));
+    mutate(nextProducts);
+  };
 
   const handleChange = () => setShouldAutoExport(!shouldAutoExport);
 

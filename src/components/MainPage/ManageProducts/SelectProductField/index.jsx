@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import _pick from "lodash/pick";
 import PropTypes from "prop-types";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
@@ -59,7 +60,13 @@ export function SelectProductField(props) {
 
   const handleChange = (_event, value) => {
     const nextValue = {
-      ...value,
+      ..._pick(value, [
+        "code",
+        "name",
+        "price",
+        "is_weight",
+        "related_barcodes",
+      ]),
       purchasePrice: 0,
       quantity: 1,
       margin: 25,

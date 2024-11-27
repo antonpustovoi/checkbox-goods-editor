@@ -34,7 +34,7 @@ export function SaveProductMenuItem(props) {
       ),
   );
 
-  const handleClick = () => mutate(row);
+  const handleClick = () => mutate({ ...row, id: row.original.id });
 
   return (
     <MenuItem icon={<SaveIcon />} disabled={isDisabled} onClick={handleClick}>
